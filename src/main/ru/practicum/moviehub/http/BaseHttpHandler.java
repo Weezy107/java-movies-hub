@@ -10,11 +10,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public abstract class BaseHttpHandler implements HttpHandler {
+    protected static final String HEADER_CONTENT_TYPE = "Content-Type";
     protected static final String CT_JSON = "application/json; charset=UTF-8";
     protected final Gson gson = new Gson();
 
     protected void sendJson(HttpExchange ex, int status, String json) throws IOException {
-        ex.getResponseHeaders().set("Content-Type", CT_JSON);
+        ex.getResponseHeaders().set(HEADER_CONTENT_TYPE, CT_JSON);
         byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
         ex.sendResponseHeaders(status, bytes.length);
         ex.getResponseBody().write(bytes);
